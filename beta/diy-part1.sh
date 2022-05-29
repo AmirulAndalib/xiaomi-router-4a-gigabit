@@ -24,3 +24,9 @@ export imsize1=$(grep  -a -n -e 'define Device/xiaomi_mir3g-v2' target/linux/ram
 export imsize1=$(expr $imsize1 + 2)
 export imsize1=$(echo $imsize1"s")
 sed -i "$imsize1/IMAGE_SIZE := .*/IMAGE_SIZE := 16064k/" target/linux/ramips/image/mt7621.mk
+
+
+## mtk7621将openwrt的开源hwnat替换为mtk sdk版本
+rm -rf target/linux/ramips
+git clone https://github.com/padavanonly/immortalwrt/tree/master/target/linux/ramips target/linux/ramips
+git checkout target/linux/ramips
