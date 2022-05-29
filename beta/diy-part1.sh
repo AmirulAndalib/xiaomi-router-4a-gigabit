@@ -27,6 +27,6 @@ sed -i "$imsize1/IMAGE_SIZE := .*/IMAGE_SIZE := 16064k/" target/linux/ramips/ima
 
 
 ## mtk7621将openwrt的开源hwnat替换为mtk sdk版本
-rm -rf target/linux/ramips
-git clone https://github.com/padavanonly/immortalwrt/tree/master/target/linux/ramips target/linux/ramips
-git checkout target/linux/ramips
+# rm -rf target/linux/ramips
+# git clone https://github.com/padavanonly/immortalwrt/tree/master/target/linux/ramips target/linux/ramips
+# git checkout target/linux/ramips
