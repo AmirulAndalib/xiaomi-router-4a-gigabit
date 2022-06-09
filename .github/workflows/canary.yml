@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: R4A-beta
+name: R4A-canary
 
 on:
   repository_dispatch:
@@ -22,10 +22,10 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: beta/feeds.conf.default
-  CONFIG_FILE: beta/r4a-beta.config
-  DIY_P1_SH: beta/diy-part1.sh
-  DIY_P2_SH: beta/diy-part2.sh
+  FEEDS_CONF: canary/feeds.conf.default
+  CONFIG_FILE: canary/r4a-canary.config
+  DIY_P1_SH: canary/diy-part1.sh
+  DIY_P2_SH: canary/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -162,7 +162,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d")-Lean2"
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d")-Lean3"
         echo "::set-output name=release_date::$(date +"%Y.%m.%d")"
         touch release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
@@ -190,7 +190,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 6
+        keep_latest: 9
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
