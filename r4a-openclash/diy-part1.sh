@@ -2,7 +2,7 @@
 
 
 ## ramips机型,默认内核5.4，修改内核为5.15
-sed -i 's/PATCHVER:=5.4/PATCHVER:=5.15/g' target/linux/ramips/Makefile
+# sed -i 's/PATCHVER:=5.4/PATCHVER:=5.15/g' target/linux/ramips/Makefile
 
 
 ## 修改R4A千兆版闪存布局为Breed直刷版
