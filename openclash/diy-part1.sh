@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-## ramips机型,默认内核5.4，修改内核为5.15
-# sed -i 's/PATCHVER:=5.4/PATCHVER:=5.15/g' target/linux/ramips/Makefile
+## ramips机型,默认内核5.4，修改内核为5.10
+sed -i 's/PATCHVER:=5.4/PATCHVER:=5.10/g' target/linux/ramips/Makefile
 
 
 ## 修改R4A千兆版闪存布局为Breed直刷版
@@ -25,8 +25,3 @@ export imsize1=$(expr $imsize1 + 2)
 export imsize1=$(echo $imsize1"s")
 sed -i "$imsize1/IMAGE_SIZE := .*/IMAGE_SIZE := 16064k/" target/linux/ramips/image/mt7621.mk
 
-
-## mtk7621将openwrt的开源hwnat替换为mtk sdk版本
-# rm -rf target/linux/ramips
-# git clone https://github.com/padavanonly/immortalwrt/tree/master/target/linux/ramips target/linux/ramips
-# git checkout target/linux/ramips
