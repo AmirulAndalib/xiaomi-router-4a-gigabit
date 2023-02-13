@@ -18,9 +18,9 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: r4a-openclash/r4a-openclash.config
-  DIY_P1_SH: r4a-openclash/diy-part1.sh
-  DIY_P2_SH: r4a-openclash/diy-part2.sh
+  CONFIG_FILE: openclash/openclash.config
+  DIY_P1_SH: openclash/diy-part1.sh
+  DIY_P2_SH: openclash/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
