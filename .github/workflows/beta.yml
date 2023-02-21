@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: R4A-beta
+name: r4a-beta
 
 on:
   repository_dispatch:
@@ -116,6 +116,14 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
+        rm -rf config.buildinfo
+        rm -rf feeds.buildinfo
+        rm -rf profiles.json
+        rm -rf sha256sums
+        rm -rf version.buildinfo
+        rm -rf openwrt-ramips-mt7621-xiaomi_mi-router-4a-gigabit-initramfs-kernel.bin
+        rm -rf openwrt-ramips-mt7621-xiaomi_mi-router-4a-gigabit.manifest
+        mv openwrt-ramips-mt7621-xiaomi_mi-router-4a-gigabit-squashfs-sysupgrade.bin beta-openwrt-xiaomi_mi-router-4a-gigabit-squashfs-sysupgrade.bin
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
@@ -130,11 +138,13 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d")-beta"
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
         echo "::set-output name=release_date::$(date +"%Y.%m.%d")"
         touch release.txt
-        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo "后台地址：192.168.11.1
+              默认密码：password
+              beta   = 5.10内核
+              stable = 5.4内核" >> release.txt
         echo "::set-output name=status::success"
 
     - name: Upload firmware to release
@@ -143,7 +153,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: ${{ steps.tag.outputs.release_date }} xiaomi-router-4a-gigabit beta
+        name: ${{ steps.tag.outputs.release_date }} xiaomi-router-4a-gigabit
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
@@ -158,7 +168,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 9
+        keep_latest: 20
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
