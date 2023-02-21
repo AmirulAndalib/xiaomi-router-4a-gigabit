@@ -141,6 +141,10 @@ jobs:
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
         echo "::set-output name=release_date::$(date +"%Y.%m.%d")"
         touch release.txt
+        echo "后台地址：192.168.11.1
+              默认密码：password
+              beta   = 5.10内核
+              stable = 5.4内核" >> release.txt
         echo "::set-output name=status::success"
 
     - name: Upload firmware to release
