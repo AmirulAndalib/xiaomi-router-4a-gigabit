@@ -116,6 +116,14 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
+        rm -rf config.buildinfo
+        rm -rf feeds.buildinfo
+        rm -rf profiles.json
+        rm -rf sha256sums
+        rm -rf version.buildinfo
+        rm -rf openwrt-ramips-mt7621-xiaomi_mi-router-4a-gigabit-initramfs-kernel.bin
+        rm -rf openwrt-ramips-mt7621-xiaomi_mi-router-4a-gigabit.manifest
+        mv openwrt-ramips-mt7621-xiaomi_mi-router-4a-gigabit-squashfs-sysupgrade.bin stable-openwrt-xiaomi_mi-router-4a-gigabit-squashfs-sysupgrade.bin
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
@@ -130,7 +138,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d")-stable"
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
         echo "::set-output name=release_date::$(date +"%Y.%m.%d")"
         touch release.txt
         echo "::set-output name=status::success"
@@ -141,7 +149,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: ${{ steps.tag.outputs.release_date }} xiaomi-router-4a-gigabit stable
+        name: ${{ steps.tag.outputs.release_date }} xiaomi-router-4a-gigabit
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
@@ -156,7 +164,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 30
+        keep_latest: 20
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
